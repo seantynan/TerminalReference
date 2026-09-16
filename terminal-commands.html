@@ -1,106 +1,171 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terminal Command Reference</title>
     <style>
-        body {
-            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 24px;
-            line-height: 1.6;
-            color: #222;
-            background: #fafafa;
-        }
-
-        h1 {
-            margin-bottom: 0;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-top: 4px;
-        }
-
-        section {
-            margin-top: 40px;
-        }
-
-        .command {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin: 16px 0;
-        }
-
-        code {
-            font-family: Consolas, "Courier New", monospace;
-            background: #f1f1f1;
-            padding: 3px 6px;
-            border-radius: 4px;
-        }
-
-        pre {
-            background: #202124;
-            color: #f5f5f5;
-            padding: 14px;
-            border-radius: 6px;
-            overflow-x: auto;
-        }
-
-        pre code {
-            background: none;
-            padding: 0;
-        }
-
-        .shell {
-            font-weight: 600;
-            color: #555;
-        }
+        body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 1100px; margin: 40px auto; padding: 0 24px 60px; line-height: 1.6; color: #222; background: #fafafa; }
+        h1 { margin-bottom: 0; }
+        h2 { margin-top: 48px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+        .subtitle { color: #666; margin-top: 4px; }
+        nav { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 16px 20px; margin: 32px 0; }
+        nav a { margin-right: 18px; color: #2457a6; text-decoration: none; }
+        nav a:hover { text-decoration: underline; }
+        .command { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 16px 20px; margin: 18px 0; }
+        .command h3 { margin-top: 0; }
+        code { font-family: Consolas, "Courier New", monospace; background: #f1f1f1; padding: 3px 6px; border-radius: 4px; }
+        pre { background: #202124; color: #f5f5f5; padding: 14px; border-radius: 6px; overflow-x: auto; }
+        pre code { background: none; padding: 0; }
+        .shell { font-weight: 600; color: #555; margin-bottom: 4px; }
+        .note { background: #f5f7fa; border-left: 4px solid #aaa; padding: 10px 14px; margin-top: 14px; }
+        .same { color: #555; font-style: italic; }
     </style>
 </head>
-
 <body>
 
 <h1>Terminal Command Reference</h1>
 <p class="subtitle">PowerShell &amp; Bash — commands I actually use.</p>
 
-<section>
+<nav>
+    <strong>Jump to:</strong>
+    <a href="#navigation">Navigation</a>
+    <a href="#files">Files &amp; Directories</a>
+    <a href="#git">Git</a>
+    <a href="#dotnet">.NET</a>
+    <a href="#node">npm / Node</a>
+    <a href="#system">System &amp; Networking</a>
+</nav>
+
+<section id="navigation">
+    <h2>Shell Navigation</h2>
+
+    <div class="command">
+        <h3>Show the current directory</h3>
+        <p class="shell">PowerShell</p>
+        <pre><code>Get-Location</code></pre>
+        <p class="shell">Bash</p>
+        <pre><code>pwd</code></pre>
+        <p class="note">PowerShell also accepts <code>pwd</code> as an alias.</p>
+    </div>
+
+    <div class="command">
+        <h3>Change directory</h3>
+        <p class="shell">PowerShell</p>
+        <pre><code>cd C:\git\Docs\TerminalReference</code></pre>
+        <p class="shell">Bash</p>
+        <pre><code>cd ~/git/TerminalReference</code></pre>
+        <p class="note"><code>cd ..</code> moves up one directory in both shells.</p>
+    </div>
+</section>
+
+<section id="files">
     <h2>Files &amp; Directories</h2>
 
     <div class="command">
-        <h3>Show a directory tree including files</h3>
-
-        <p class="shell">PowerShell / Windows</p>
-        <pre><code>tree .\docs /F</code></pre>
-
-        <p class="shell">Bash / Linux</p>
-        <pre><code>tree ./docs</code></pre>
+        <h3>List the current directory</h3>
+        <p class="shell">PowerShell</p>
+        <pre><code>Get-ChildItem</code></pre>
+        <p class="shell">Bash</p>
+        <pre><code>ls</code></pre>
+        <p class="note">PowerShell also accepts <code>ls</code> as an alias for <code>Get-ChildItem</code>.</p>
     </div>
 
+    <div class="command">
+        <h3>Show a directory tree including files</h3>
+        <p class="shell">PowerShell / Windows</p>
+        <pre><code>tree .\docs /F</code></pre>
+        <p class="shell">Bash / Linux</p>
+        <pre><code>tree ./docs</code></pre>
+        <p class="note"><code>.</code> means the current directory. <code>.\docs</code> or <code>./docs</code> means the <code>docs</code> directory beneath it. On Windows, <code>/F</code> tells <code>tree</code> to include files as well as directories.</p>
+    </div>
+
+    <div class="command">
+        <h3>Create a directory</h3>
+        <p class="shell">PowerShell</p>
+        <pre><code>New-Item -ItemType Directory -Path "MyFolder"</code></pre>
+        <p class="shell">Bash</p>
+        <pre><code>mkdir MyFolder</code></pre>
+        <p class="note">For everyday use, <code>mkdir MyFolder</code> also works in PowerShell.</p>
+    </div>
 </section>
 
-<section>
+<section id="git">
     <h2>Git</h2>
-    <p>Commands will be added here as needed.</p>
+
+    <div class="command">
+        <h3>Check repository status</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>git status</code></pre>
+    </div>
+
+    <div class="command">
+        <h3>See configured remotes</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>git remote -v</code></pre>
+        <p class="note">Shows the remote repository URLs used for fetching and pushing.</p>
+    </div>
+
+    <div class="command">
+        <h3>Stage all current changes</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>git add .</code></pre>
+    </div>
+
+    <div class="command">
+        <h3>Commit staged changes</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>git commit -m "Describe the change"</code></pre>
+    </div>
+
+    <div class="command">
+        <h3>Push commits</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>git push</code></pre>
+    </div>
 </section>
 
-<section>
+<section id="dotnet">
     <h2>.NET</h2>
-    <p>Commands will be added here as needed.</p>
+
+    <div class="command">
+        <h3>Build</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>dotnet build</code></pre>
+    </div>
+
+    <div class="command">
+        <h3>Run tests</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>dotnet test</code></pre>
+    </div>
 </section>
 
-<section>
+<section id="node">
     <h2>npm / Node</h2>
-    <p>Commands will be added here as needed.</p>
+
+    <div class="command">
+        <h3>Install project dependencies</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>npm install</code></pre>
+    </div>
+
+    <div class="command">
+        <h3>Run the development script</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>npm run dev</code></pre>
+    </div>
+
+    <div class="command">
+        <h3>Build the project</h3>
+        <p class="shell">PowerShell / Bash</p>
+        <pre><code>npm run build</code></pre>
+    </div>
 </section>
 
-<section>
+<section id="system">
     <h2>System &amp; Networking</h2>
-    <p>Commands will be added here as needed.</p>
+    <p>Commands will be added here when they earn their place.</p>
 </section>
 
 </body>
