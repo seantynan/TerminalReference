@@ -4,28 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terminal Command Reference</title>
-    <style>
-        body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 1100px; margin: 40px auto; padding: 0 24px 60px; line-height: 1.6; color: #222; background: #fafafa; }
-        h1 { margin-bottom: 0; }
-        h2 { margin-top: 48px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
-        .subtitle { color: #666; margin-top: 4px; }
-        nav { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 16px 20px; margin: 32px 0; }
-        nav a { margin-right: 18px; color: #2457a6; text-decoration: none; }
-        nav a:hover { text-decoration: underline; }
-        .command { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 16px 20px; margin: 18px 0; }
-        .command h3 { margin-top: 0; }
-        code { font-family: Consolas, "Courier New", monospace; background: #f1f1f1; padding: 3px 6px; border-radius: 4px; }
-        pre { background: #202124; color: #f5f5f5; padding: 14px; border-radius: 6px; overflow-x: auto; }
-        pre code { background: none; padding: 0; }
-        .shell { font-weight: 600; color: #555; margin-bottom: 4px; }
-        .note { background: #f5f7fa; border-left: 4px solid #aaa; padding: 10px 14px; margin-top: 14px; }
-        .same { color: #555; font-style: italic; }
-    </style>
+    <link rel="stylesheet" href="terminal-reference.css">
 </head>
 <body>
 
-<h1>Terminal Command Reference</h1>
-<p class="subtitle">PowerShell &amp; Bash — commands I actually use.</p>
+<header class="page-header">
+    <div>
+        <h1>Terminal Command Reference</h1>
+        <p class="subtitle">PowerShell &amp; Bash — commands I actually use.</p>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="true">☀ Light</button>
+</header>
 
 <nav>
     <strong>Jump to:</strong>
@@ -167,6 +156,28 @@
     <h2>System &amp; Networking</h2>
     <p>Commands will be added here when they earn their place.</p>
 </section>
+
+<script>
+    const toggle = document.getElementById('theme-toggle');
+    const storageKey = 'terminal-reference-theme';
+
+    function applyTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        const isDark = theme === 'dark';
+        toggle.textContent = isDark ? '☀ Light' : '☾ Dark';
+        toggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        toggle.setAttribute('aria-pressed', String(isDark));
+    }
+
+    const savedTheme = localStorage.getItem(storageKey);
+    applyTheme(savedTheme === 'light' ? 'light' : 'dark');
+
+    toggle.addEventListener('click', () => {
+        const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(storageKey, nextTheme);
+        applyTheme(nextTheme);
+    });
+</script>
 
 </body>
 </html>
